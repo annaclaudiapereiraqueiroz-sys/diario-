@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Diário da Travessia · 90 Dias</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Diário 90">
+<meta name="theme-color" content="#FBF9F4">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSIzOCIgZmlsbD0iIzRFNkE1OSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iNzMiIHI9IjM0IiBmaWxsPSJub25lIiBzdHJva2U9IiNGM0NFNkMiIHN0cm9rZS13aWR0aD0iNiIvPjxwYXRoIGQ9Ik02OCA3M2wxNCAxNCAyOC0yOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjRjNDRTZDIiBzdHJva2Utd2lkdGg9IjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjx0ZXh0IHg9IjkwIiB5PSIxNDAiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjI2IiBmaWxsPSIjRjNDRTZDIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj45MDwvdGV4dD48L3N2Zz4=">
+<style>
+  :root{
+    --ink:#1F2A2E; --slate:#5A6B70; --mist:#8FA0A4; --paper:#FBF9F4; --card:#FFFFFF;
+    --line:#E7E2D6; --sage:#6E8B7A; --sageDeep:#4E6A59; --sageSoft:#EAF0EB;
+    --clay:#C8946A; --claySoft:#F6ECE1; --gold:#B99653; --sky:#5E8CA6; --skySoft:#E9F0F3;
+    --plum:#8A7196; --plumSoft:#EFE9F2;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+       color:var(--ink);background:var(--paper);}
+  .root{max-width:860px;margin:0 auto;padding:0 16px 70px;min-height:100vh;}
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;}
+
+  header.head{position:sticky;top:0;z-index:20;background:var(--paper);padding:18px 0 12px;border-bottom:1px solid var(--line);}
+  .headInner{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .title{font-size:27px;line-height:1.05;margin:4px 0 0;font-weight:600;letter-spacing:-.01em;}
+  .tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;}
+  .tab{border:none;background:transparent;padding:8px 15px;border-radius:999px;font-size:13px;font-weight:600;color:var(--slate);cursor:pointer;}
+  .tab.on{background:var(--sage);color:#fff;}
+  .progressLine{height:5px;background:var(--line);border-radius:5px;margin-top:14px;overflow:hidden;}
+  .progressFill{height:100%;background:linear-gradient(90deg,var(--sage),var(--gold));border-radius:5px;transition:width .4s;}
+  .progressMeta{font-size:11px;color:var(--mist);margin-top:5px;display:flex;justify-content:space-between;align-items:center;}
+  .backupBtns{display:flex;gap:6px;}
+  .miniBtn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 11px;font-size:11px;font-weight:600;color:var(--sage);cursor:pointer;}
+  .miniBtn:active{background:var(--sageSoft);}
+
+  main{padding-top:18px;}
+  .dayNav{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .navBtn{width:46px;height:46px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:22px;color:var(--sage);cursor:pointer;line-height:1;}
+  .navBtn:disabled{opacity:.3;}
+  .dayHero{flex:1;text-align:center;}
+  .dayNum{font-size:25px;font-weight:600;}
+  .dayInfo{font-size:12px;color:var(--slate);margin-top:2px;text-transform:capitalize;}
+  .dayTags{display:flex;gap:6px;justify-content:center;margin-top:8px;flex-wrap:wrap;}
+  .tag{font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:999px;}
+  .facNote{font-size:11.5px;color:#A9793F;margin-top:8px;font-style:italic;text-align:center;}
+  .capsNote{font-size:12px;color:var(--clay);margin-top:8px;background:var(--claySoft);padding:9px 12px;border-radius:9px;line-height:1.45;text-align:center;}
+  .jump{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:10px;}
+  .jump input{width:64px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px;text-align:center;background:var(--card);color:var(--ink);}
+  .jump label{font-size:11px;color:var(--mist);}
+
+  .meals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;}
+  .mealCard{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .mealHead{display:flex;align-items:center;gap:7px;padding:10px 12px;}
+  .mealIcon{font-size:15px;}
+  .mealLabel{font-size:13px;font-weight:700;flex:1;}
+  .mealTime{width:52px;border:none;background:rgba(255,255,255,.6);border-radius:6px;font-size:11px;padding:4px 5px;text-align:center;color:var(--slate);}
+  .mealBody{padding:10px 12px 12px;}
+  .chk{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:6px 0;cursor:pointer;text-align:left;}
+  .box{width:19px;height:19px;flex:none;border:1.5px solid var(--line);border-radius:5px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+  .chkLabel{font-size:12.5px;line-height:1.3;}
+  .scaleWrap{margin:8px 0 4px;}
+  .scaleRow{display:flex;gap:3px;}
+  .scaleDot{flex:1;aspect-ratio:1;min-width:0;border:1px solid var(--line);border-radius:6px;font-size:10px;font-weight:600;background:transparent;color:var(--mist);cursor:pointer;padding:0;}
+  .scaleLegend{display:flex;justify-content:space-between;font-size:9px;color:var(--mist);margin-top:4px;font-style:italic;}
+  .obs{width:100%;margin-top:8px;border:none;border-bottom:1px dashed var(--line);padding:5px 0;font-size:12px;background:none;color:var(--ink);}
+  .obs:focus,.mealTime:focus{outline:none;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;}
+  .panelHead{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sageDeep);margin-bottom:12px;}
+  .panelHint{font-weight:400;text-transform:none;letter-spacing:0;color:var(--mist);font-size:11px;margin-left:6px;}
+  .fieldRow{margin-bottom:11px;}
+  .fieldRow.twin{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .fieldRow label{display:block;font-size:11px;color:var(--slate);margin-bottom:4px;font-weight:500;}
+  .fieldRow input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-size:13px;background:var(--paper);color:var(--ink);}
+  .fieldRow input:focus{outline:none;border-color:var(--sage);}
+  .hintLine{font-size:10.5px;color:var(--mist);margin:-4px 0 11px;font-style:italic;}
+  .reflect{width:100%;min-height:150px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px;line-height:1.5;resize:vertical;background:var(--paper);color:var(--ink);font-family:inherit;}
+  .reflect:focus{outline:none;border-color:var(--plum);}
+
+  .wellGrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .wellLabel{display:block;font-size:11px;color:var(--slate);margin-bottom:8px;font-weight:500;}
+  .pillRow{display:flex;gap:5px;flex-wrap:wrap;}
+  .pill{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 12px;font-size:11.5px;font-weight:600;color:var(--slate);cursor:pointer;}
+  .moodRow{gap:6px;}
+  .mood{border:1px solid var(--line);background:var(--paper);border-radius:10px;width:42px;height:40px;font-size:19px;cursor:pointer;line-height:1;filter:grayscale(.6);opacity:.7;}
+  .mood.on{border-color:var(--plum);background:var(--plumSoft);filter:none;opacity:1;transform:scale(1.05);}
+  .wellInline{display:flex;align-items:center;gap:6px;margin-top:10px;}
+  .wellHours{width:130px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;background:var(--paper);color:var(--ink);}
+  .wellHours:focus,.wellText:focus{outline:none;border-color:var(--sky);}
+  .wellUnit{font-size:12px;color:var(--mist);}
+  .wellText{width:100%;margin-top:10px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12.5px;background:var(--paper);color:var(--ink);}
+  .capsCheck{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+
+  .measBanner{font-size:12px;padding:10px 12px;border-radius:9px;line-height:1.45;margin-bottom:12px;font-weight:500;}
+  .measBannerMonth{background:var(--plumSoft);color:var(--plum);}
+  .measBannerWeek{background:var(--skySoft);color:var(--sky);}
+  .measGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .measItem label{display:block;font-size:11px;color:var(--slate);margin-bottom:4px;font-weight:500;}
+  .measInput{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;background:var(--paper);overflow:hidden;}
+  .measInput input{flex:1;width:100%;border:none;background:none;padding:9px 10px;font-size:13px;color:var(--ink);}
+  .measInput input:focus{outline:none;}
+  .measInput span{font-size:11px;color:var(--mist);padding-right:10px;}
+
+  .evoHero{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;}
+  .evoStat{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .evoBaseLabel,.evoNowLabel{display:block;font-size:11px;color:var(--mist);margin-bottom:3px;}
+  .evoBaseVal{font-size:24px;color:var(--slate);}
+  .evoNowVal{font-size:30px;color:var(--ink);font-weight:600;}
+  .evoBaseVal em,.evoNowVal em{font-size:14px;font-style:normal;color:var(--mist);}
+  .evoArrow{font-size:20px;color:var(--mist);}
+  .evoDelta{margin-left:auto;font-size:22px;font-weight:600;}
+  .metricPicker{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .mchip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:600;color:var(--slate);cursor:pointer;}
+  .mchip.on{background:var(--sageDeep);color:#fff;border-color:var(--sageDeep);}
+  .chartPanel{padding:18px 14px;}
+  .chart{width:100%;height:auto;}
+  .chartEmpty{padding:40px 20px;text-align:center;color:var(--mist);font-size:13px;}
+  .evoNote{font-size:12px;color:var(--slate);line-height:1.5;margin-top:12px;padding:0 4px;}
+
+  footer.foot{text-align:center;font-size:12px;color:var(--mist);margin-top:28px;font-style:italic;line-height:1.5;padding:0 20px;}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sageDeep);color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;z-index:50;opacity:0;transition:opacity .3s;pointer-events:none;}
+  .toast.show{opacity:1;}
+
+  @media (max-width:720px){
+    .meals{grid-template-columns:1fr;}
+    .grid2{grid-template-columns:1fr;}
+    .wellGrid{grid-template-columns:1fr;gap:16px;}
+    .measGrid{grid-template-columns:repeat(2,1fr);}
+    .title{font-size:23px;}
+    .headInner{flex-direction:column;align-items:stretch;gap:10px;}
+    .tabs{align-self:flex-start;}
+    .evoDelta{margin-left:0;width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="root" id="app"></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="importFile" accept="application/json" style="display:none">
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// Configuração
+// ─────────────────────────────────────────────────────────────
+const TOTAL_DAYS = 90;
+const START = new Date(2026,7,27,12,0,0);   // 27/08/2026 (mês 0-based: 7=agosto)
+const CAPS_START = new Date(2026,7,28,12,0,0);
+const STORE_KEY = "diario90_anna_v1";
+
+const MEALS = [
+  {key:"cafe",label:"Café da manhã",icon:"☀",tint:"var(--clay)",tintSoft:"var(--claySoft)"},
+  {key:"almoco",label:"Almoço",icon:"◐",tint:"var(--sage)",tintSoft:"var(--sageSoft)"},
+  {key:"jantar",label:"Jantar",icon:"☾",tint:"var(--plum)",tintSoft:"var(--plumSoft)"},
+];
+const RULES = [
+  {key:"mastigar",label:"Mastigou 35x cada garfada"},
+  {key:"talher",label:"Repousou o talher na mesa"},
+  {key:"semDoce",label:"Zero bebidas doces"},
+  {key:"comidaEmocao",label:"Comida ou emoção?"},
+];
+const MEASURES = [
+  {key:"peso",label:"Peso",unit:"kg",step:"0.1"},
+  {key:"pescoco",label:"Pescoço",unit:"cm",step:"0.5"},
+  {key:"cintura",label:"Cintura",unit:"cm",step:"0.5"},
+  {key:"abdomen",label:"Abdômen",unit:"cm",step:"0.5"},
+  {key:"bumbum",label:"Bumbum",unit:"cm",step:"0.5"},
+  {key:"coxaD",label:"Coxa dir.",unit:"cm",step:"0.5"},
+  {key:"coxaE",label:"Coxa esq.",unit:"cm",step:"0.5"},
+  {key:"bracoD",label:"Braço dir.",unit:"cm",step:"0.5"},
+  {key:"bracoE",label:"Braço esq.",unit:"cm",step:"0.5"},
+];
+const BASELINE = {peso:74.2,pescoco:34.5,cintura:83,abdomen:98,bumbum:108,coxaD:52,coxaE:53,bracoD:31,bracoE:31};
+const SONO_OPTS=[{n:1,label:"Péssimo"},{n:2,label:"Ruim"},{n:3,label:"Ok"},{n:4,label:"Bom"},{n:5,label:"Ótimo"}];
+const HUMOR_OPTS=[{n:1,label:"😔"},{n:2,label:"😕"},{n:3,label:"😐"},{n:4,label:"🙂"},{n:5,label:"😄"}];
+
+const FACULDADE=[2,4], CARDIO=[1,3,5], YOGA=[1,3], MEDIDA_DAYS=[8,36,71];
+
+// ─────────────────────────────────────────────────────────────
+// Helpers de data
+// ─────────────────────────────────────────────────────────────
+function dayDate(n){const d=new Date(START);d.setDate(d.getDate()+(n-1));return d;}
+function weekday(n){const w=dayDate(n).getDay();return w===0?7:w;}   // seg=1..dom=7
+function weekOf(n){return Math.floor((n-1)/7)+1;}
+function isFaculdade(n){return FACULDADE.includes(weekday(n));}
+function isPesagem(n){return weekday(n)===4;}
+function isMedidaMensal(n){return MEDIDA_DAYS.includes(n);}
+function capsStarted(n){return dayDate(n).getTime()>=CAPS_START.getTime();}
+function fmtDate(d){return d.toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"});}
+
+// ─────────────────────────────────────────────────────────────
+// Estado / persistência
+// ─────────────────────────────────────────────────────────────
+let DATA={};
+try{const raw=localStorage.getItem(STORE_KEY);if(raw)DATA=JSON.parse(raw);}catch(e){DATA={};}
+let saveTimer=null;
+function persist(){
+  if(saveTimer)clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{try{localStorage.setItem(STORE_KEY,JSON.stringify(DATA));}catch(e){}},300);
+}
+function emptyDay(){
+  const meals={};MEALS.forEach(m=>meals[m.key]={rules:{},scale:null,obs:"",time:""});
+  return{meals,atividade:{musculacao:"",esteiraKm:"",esteiraMin:"",ioga:"",sentiu:""},
+    bemestar:{sono:null,sonoHoras:"",humor:null,humorNota:""},capsulas:false,reflexao:"",medidas:{},done:false};
+}
+function getDay(n){
+  const b=emptyDay();const d=DATA[n];
+  if(!d)return b;
+  return{...b,...d,
+    meals:{...b.meals,...(d.meals||{})},
+    atividade:{...b.atividade,...(d.atividade||{})},
+    bemestar:{...b.bemestar,...(d.bemestar||{})},
+    medidas:d.medidas||{}};
+}
+function computeDone(day){
+  return MEALS.every(m=>{const md=day.meals[m.key];return RULES.every(r=>md.rules[r.key])&&md.scale!=null;});
+}
+function saveDay(n,day){day.done=computeDone(day);DATA[n]=day;persist();}
+
+// ─────────────────────────────────────────────────────────────
+// Estado de UI
+// ─────────────────────────────────────────────────────────────
+let current=1, view="dia", metric="peso";
+
+// ─────────────────────────────────────────────────────────────
+// Render
+// ─────────────────────────────────────────────────────────────
+const app=document.getElementById("app");
+function h(html){const t=document.createElement("template");t.innerHTML=html.trim();return t.content.firstChild;}
+function esc(s){return(s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+function render(){
+  const filled=Object.values(DATA).filter(d=>d&&d.done).length;
+  app.innerHTML="";
+  // Cabeçalho
+  const head=h(`<header class="head">
+    <div class="headInner">
+      <div>
+        <div class="eyebrow">Programa de 90 dias</div>
+        <h1 class="title serif">Diário da travessia</h1>
+      </div>
+      <div class="tabs">
+        <button class="tab ${view==='dia'?'on':''}" data-v="dia">Dia a dia</button>
+        <button class="tab ${view==='evolucao'?'on':''}" data-v="evolucao">Evolução</button>
+      </div>
+    </div>
+    <div class="progressLine"><div class="progressFill" style="width:${(filled/TOTAL_DAYS)*100}%"></div></div>
+    <div class="progressMeta">
+      <span>${filled} de ${TOTAL_DAYS} dias completos</span>
+      <span class="backupBtns">
+        <button class="miniBtn" id="btnExport">↓ Exportar backup</button>
+        <button class="miniBtn" id="btnImport">↑ Importar</button>
+      </span>
+    </div>
+  </header>`);
+  app.appendChild(head);
+  head.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{view=b.dataset.v;render();});
+  head.querySelector("#btnExport").onclick=exportData;
+  head.querySelector("#btnImport").onclick=()=>document.getElementById("importFile").click();
+
+  const main=document.createElement("main");
+  app.appendChild(main);
+  if(view==="dia")renderDia(main); else renderEvolucao(main);
+
+  app.appendChild(h(`<footer class="foot">Um dia fora do plano não desfaz semanas de progresso. Você sempre pode retomar na próxima refeição.</footer>`));
+}
+
+function renderDia(main){
+  const day=getDay(current);
+  const dt=dayDate(current);
+  const fac=isFaculdade(current), med=isMedidaMensal(current), pes=isPesagem(current);
+  const cardio=!fac&&CARDIO.includes(weekday(current));
+  const yoga=!fac&&YOGA.includes(weekday(current));
+  const caps=capsStarted(current);
+  const capsFirst=dt.getTime()===CAPS_START.getTime();
+
+  // navegação + tags
+  let tags=`${fac?`<span class="tag" style="background:#F3E8DA;color:#A9793F;">🎓 faculdade presencial</span>`:""}
+    <span class="tag" style="background:var(--sageSoft);color:var(--sageDeep);">musculação</span>
+    ${cardio?`<span class="tag" style="background:var(--skySoft);color:var(--sky);">esteira</span>`:""}
+    ${yoga?`<span class="tag" style="background:var(--plumSoft);color:var(--plum);">ioga</span>`:""}
+    ${caps?`<span class="tag" style="background:var(--claySoft);color:var(--clay);">💊 cápsulas</span>`:""}
+    ${med?`<span class="tag" style="background:var(--plumSoft);color:var(--plum);">📏 medidas do mês</span>`:(pes?`<span class="tag" style="background:var(--skySoft);color:var(--sky);">⚖ pesagem</span>`:"")}`;
+
+  const nav=h(`<div>
+    <div class="dayNav">
+      <button class="navBtn" id="prev" ${current===1?"disabled":""}>‹</button>
+      <div class="dayHero">
+        <div class="dayNum serif">Dia ${current}</div>
+        <div class="dayInfo">Semana ${weekOf(current)} · ${fmtDate(dt)} ${dt.getFullYear()}</div>
+        <div class="dayTags">${tags}</div>
+        ${fac?`<div class="facNote">Dia normalmente corrido — esteira e ioga não são o padrão hoje, mas se o dia abrir (home office, aula que caiu), fica à vontade pra encaixar.</div>`:""}
+        ${capsFirst?`<div class="capsNote">✨ A partir de hoje começam as cápsulas: 1 sublingual pela manhã (NADH + PQQ) e 1 cápsula 2x ao dia (Coenzima Q10 e outros).</div>`:""}
+      </div>
+      <button class="navBtn" id="next" ${current===TOTAL_DAYS?"disabled":""}>›</button>
+    </div>
+    <div class="jump">
+      <label>Ir para o dia</label>
+      <input type="number" min="1" max="90" id="jumpInput" value="${current}">
+    </div>
+  </div>`);
+  main.appendChild(nav);
+  nav.querySelector("#prev").onclick=()=>{if(current>1){current--;render();}};
+  nav.querySelector("#next").onclick=()=>{if(current<TOTAL_DAYS){current++;render();}};
+  const ji=nav.querySelector("#jumpInput");
+  ji.onchange=()=>{let v=parseInt(ji.value);if(v>=1&&v<=90){current=v;render();}};
+
+  // refeições
+  const meals=h(`<section class="meals"></section>`);
+  MEALS.forEach(m=>{
+    const md=day.meals[m.key];
+    const card=h(`<div class="mealCard">
+      <div class="mealHead" style="background:${m.tintSoft}">
+        <span class="mealIcon" style="color:${m.tint}">${m.icon}</span>
+        <span class="mealLabel" style="color:${m.tint}">${m.label}</span>
+        <input class="mealTime" placeholder="--:--" value="${esc(md.time)}">
+      </div>
+      <div class="mealBody"></div>
+    </div>`);
+    const body=card.querySelector(".mealBody");
+    card.querySelector(".mealTime").oninput=e=>{const d=getDay(current);d.meals[m.key].time=e.target.value;saveDay(current,d);};
+    RULES.forEach(r=>{
+      const on=!!md.rules[r.key];
+      const btn=h(`<button class="chk">
+        <span class="box" style="border-color:${on?m.tint:'var(--line)'};background:${on?m.tint:'transparent'}">
+          ${on?'<svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+        </span>
+        <span class="chkLabel" style="color:${on?'var(--ink)':'var(--slate)'}">${r.label}</span>
+      </button>`);
+      btn.onclick=()=>{const d=getDay(current);d.meals[m.key].rules[r.key]=!d.meals[m.key].rules[r.key];saveDay(current,d);render();};
+      body.appendChild(btn);
+    });
+    // escala
+    const sc=h(`<div class="scaleWrap"><div class="scaleRow"></div>
+      <div class="scaleLegend"><span>1 · fome física</span><span>10 · pura emoção</span></div></div>`);
+    const row=sc.querySelector(".scaleRow");
+    for(let n=1;n<=10;n++){
+      const on=md.scale===n;
+      const dot=h(`<button class="scaleDot" style="background:${on?m.tint:'transparent'};color:${on?'#fff':'var(--mist)'};border-color:${on?m.tint:'var(--line)'}">${n}</button>`);
+      dot.onclick=()=>{const d=getDay(current);d.meals[m.key].scale=(d.meals[m.key].scale===n?null:n);saveDay(current,d);render();};
+      row.appendChild(dot);
+    }
+    body.appendChild(sc);
+    const obs=h(`<input class="obs" placeholder="Observações…" value="${esc(md.obs)}">`);
+    obs.oninput=e=>{const d=getDay(current);d.meals[m.key].obs=e.target.value;saveDay(current,d);};
+    body.appendChild(obs);
+    meals.appendChild(card);
+  });
+  main.appendChild(meals);
+
+  // atividade + reflexão
+  const grid=h(`<div class="grid2">
+    <section class="panel">
+      <div class="panelHead">Atividade física</div>
+      <div class="fieldRow"><label>Musculação</label><input id="mus" placeholder="ex.: Treino 1 — Perna e Glúteo" value="${esc(day.atividade.musculacao)}"></div>
+      <div class="fieldRow twin">
+        <div><label>Esteira — distância</label><input id="ekm" placeholder="km" value="${esc(day.atividade.esteiraKm)}"></div>
+        <div><label>Esteira — tempo</label><input id="emin" placeholder="min" value="${esc(day.atividade.esteiraMin)}"></div>
+      </div>
+      <div class="hintLine">Puxe distância e tempo direto do AxiomRun.</div>
+      <div class="fieldRow"><label>Ioga</label><input id="ioga" placeholder="feita? como foi?" value="${esc(day.atividade.ioga)}"></div>
+      <div class="fieldRow"><label>Como se sentiu</label><input id="sentiu" placeholder="energia, disposição…" value="${esc(day.atividade.sentiu)}"></div>
+    </section>
+    <section class="panel">
+      <div class="panelHead">Reflexão do dia</div>
+      <textarea class="reflect" id="refl" placeholder="O que este dia te ensinou? Algum gatilho? Alguma vitória pequena?">${esc(day.reflexao)}</textarea>
+    </section>
+  </div>`);
+  main.appendChild(grid);
+  const bind=(id,path)=>{grid.querySelector(id).oninput=e=>{const d=getDay(current);path(d,e.target.value);saveDay(current,d);};};
+  bind("#mus",(d,v)=>d.atividade.musculacao=v);
+  bind("#ekm",(d,v)=>d.atividade.esteiraKm=v);
+  bind("#emin",(d,v)=>d.atividade.esteiraMin=v);
+  bind("#ioga",(d,v)=>d.atividade.ioga=v);
+  bind("#sentiu",(d,v)=>d.atividade.sentiu=v);
+  bind("#refl",(d,v)=>d.reflexao=v);
+
+  // bem-estar
+  const well=h(`<section class="panel">
+    <div class="panelHead">Sono e humor</div>
+    <div class="wellGrid">
+      <div>
+        <label class="wellLabel">Como dormiu na noite anterior?</label>
+        <div class="pillRow" id="sonoRow"></div>
+        <div class="wellInline"><input class="wellHours" id="sonoHoras" placeholder="quantas horas?" value="${esc(day.bemestar.sonoHoras)}"><span class="wellUnit">h</span></div>
+      </div>
+      <div>
+        <label class="wellLabel">Humor predominante no dia</label>
+        <div class="pillRow moodRow" id="humorRow"></div>
+        <input class="wellText" id="humorNota" placeholder="alguma observação sobre o humor…" value="${esc(day.bemestar.humorNota)}">
+      </div>
+    </div>
+    <div id="capsWrap"></div>
+  </section>`);
+  const sonoRow=well.querySelector("#sonoRow");
+  SONO_OPTS.forEach(o=>{
+    const on=day.bemestar.sono===o.n;
+    const b=h(`<button class="pill ${on?'on':''}" style="${on?'background:var(--sky);border-color:var(--sky);color:#fff;':''}">${o.label}</button>`);
+    b.onclick=()=>{const d=getDay(current);d.bemestar.sono=(d.bemestar.sono===o.n?null:o.n);saveDay(current,d);render();};
+    sonoRow.appendChild(b);
+  });
+  const humorRow=well.querySelector("#humorRow");
+  HUMOR_OPTS.forEach(o=>{
+    const on=day.bemestar.humor===o.n;
+    const b=h(`<button class="mood ${on?'on':''}">${o.label}</button>`);
+    b.onclick=()=>{const d=getDay(current);d.bemestar.humor=(d.bemestar.humor===o.n?null:o.n);saveDay(current,d);render();};
+    humorRow.appendChild(b);
+  });
+  well.querySelector("#sonoHoras").oninput=e=>{const d=getDay(current);d.bemestar.sonoHoras=e.target.value;saveDay(current,d);};
+  well.querySelector("#humorNota").oninput=e=>{const d=getDay(current);d.bemestar.humorNota=e.target.value;saveDay(current,d);};
+  if(caps){
+    const on=!!day.capsulas;
+    const cw=well.querySelector("#capsWrap");
+    cw.className="capsCheck";
+    const btn=h(`<button class="chk">
+      <span class="box" style="border-color:${on?'var(--clay)':'var(--line)'};background:${on?'var(--clay)':'transparent'}">
+        ${on?'<svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7.5L5.5 11L12 3.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+      </span>
+      <span class="chkLabel" style="color:${on?'var(--ink)':'var(--slate)'}">Tomei as cápsulas hoje (sublingual pela manhã + cápsula 2x ao dia)</span>
+    </button>`);
+    btn.onclick=()=>{const d=getDay(current);d.capsulas=!d.capsulas;saveDay(current,d);render();};
+    cw.appendChild(btn);
+  }
+  main.appendChild(well);
+
+  // medidas
+  const measSec=h(`<section class="panel">
+    ${med?`<div class="measBanner measBannerMonth">📏 Medidas completas do mês — registre todas as circunferências para comparar com o ponto de partida de agosto.</div>`
+      :(pes?`<div class="measBanner measBannerWeek">⚖ Pesagem da semana — registre ao menos o peso hoje.</div>`:"")}
+    <div class="panelHead">Medidas <span class="panelHint">peso toda quinta · circunferências 1x por mês · base de 21/08 já guardada</span></div>
+    <div class="measGrid" id="measGrid"></div>
+  </section>`);
+  const mg=measSec.querySelector("#measGrid");
+  MEASURES.forEach(mm=>{
+    const val=day.medidas[mm.key]??"";
+    const item=h(`<div class="measItem"><label>${mm.label}</label>
+      <div class="measInput"><input type="number" step="${mm.step}" placeholder="${BASELINE[mm.key]??''}" value="${esc(val)}"><span>${mm.unit}</span></div></div>`);
+    item.querySelector("input").oninput=e=>{const d=getDay(current);d.medidas[mm.key]=e.target.value;saveDay(current,d);};
+    mg.appendChild(item);
+  });
+  main.appendChild(measSec);
+}
+
+function renderEvolucao(main){
+  const pts=Object.keys(DATA).map(k=>({day:+k,v:parseFloat(DATA[k]?.medidas?.[metric])}))
+    .filter(p=>!isNaN(p.v)).sort((a,b)=>a.day-b.day);
+  const base=BASELINE[metric];
+  const last=pts.length?pts[pts.length-1].v:null;
+  const delta=(last!=null&&base!=null)?last-base:null;
+  const unit=MEASURES.find(m=>m.key===metric).unit;
+
+  const hero=h(`<section class="evoHero"><div class="evoStat">
+    <div><span class="evoBaseLabel">Início · 21/08</span><span class="evoBaseVal serif">${base??"—"} <em>${unit}</em></span></div>
+    <div class="evoArrow">→</div>
+    <div><span class="evoNowLabel">Agora</span><span class="evoNowVal serif">${last??"—"} <em>${unit}</em></span></div>
+    ${delta!=null?`<div class="evoDelta serif" style="color:${delta<=0?'var(--sageDeep)':'var(--clay)'}">${delta>0?'+':''}${delta.toFixed(1)} ${unit}</div>`:""}
+  </div></section>`);
+  main.appendChild(hero);
+
+  const picker=h(`<div class="metricPicker"></div>`);
+  MEASURES.forEach(mm=>{
+    const b=h(`<button class="mchip ${metric===mm.key?'on':''}">${mm.label}</button>`);
+    b.onclick=()=>{metric=mm.key;render();};
+    picker.appendChild(b);
+  });
+  main.appendChild(picker);
+
+  const chartPanel=h(`<section class="panel chartPanel"></section>`);
+  chartPanel.appendChild(buildChart(pts,base));
+  main.appendChild(chartPanel);
+
+  main.appendChild(h(`<div class="evoNote">A linha pontilhada é o seu ponto de partida. Cada ponto é um registro seu — o gráfico se desenha sozinho conforme você preenche as medidas nos dias.</div>`));
+}
+
+function buildChart(points,baseline){
+  const W=620,H=200,padL=44,padR=16,padT=18,padB=28;
+  const all=[...(baseline!=null?[baseline]:[]),...points.map(p=>p.v)];
+  if(all.length===0)return h(`<div class="chartEmpty">Ainda sem registros — preencha as medidas para ver a evolução.</div>`);
+  let min=Math.min(...all),max=Math.max(...all);
+  if(min===max){min-=1;max+=1;}
+  const pad=(max-min)*0.15;min-=pad;max+=pad;
+  const maxDay=Math.max(90,...points.map(p=>p.day));
+  const y=v=>padT+(1-(v-min)/(max-min))*(H-padT-padB);
+  const xb=day=>padL+(Math.max(0,day-1)/(maxDay-1))*(W-padL-padR);
+  const seq=[...(baseline!=null?[{day:0,v:baseline}]:[]),...points].sort((a,b)=>a.day-b.day);
+  const path=seq.map((p,i)=>`${i===0?'M':'L'}${xb(p.day).toFixed(1)},${y(p.v).toFixed(1)}`).join(" ");
+  const ticks=4;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" class="chart" preserveAspectRatio="xMidYMid meet">`;
+  for(let i=0;i<=ticks;i++){
+    const v=min+(i/ticks)*(max-min);const yy=y(v);
+    svg+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="var(--line)" stroke-width="1"/>`;
+    svg+=`<text x="${padL-8}" y="${yy+3}" text-anchor="end" font-size="10" fill="var(--mist)">${v.toFixed(v<10?1:0)}</text>`;
+  }
+  if(baseline!=null)svg+=`<line x1="${xb(0)}" y1="${y(baseline)}" x2="${W-padR}" y2="${y(baseline)}" stroke="var(--mist)" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>`;
+  if(seq.length>1)svg+=`<path d="${path}" fill="none" stroke="var(--sage)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+  seq.forEach(p=>{svg+=`<circle cx="${xb(p.day)}" cy="${y(p.v)}" r="${p.day===0?3:4}" fill="${p.day===0?'var(--mist)':'var(--sage)'}" stroke="#fff" stroke-width="1.5"/>`;});
+  svg+=`<text x="${padL}" y="${H-6}" font-size="10" fill="var(--mist)">início</text>`;
+  svg+=`<text x="${W-padR}" y="${H-6}" text-anchor="end" font-size="10" fill="var(--mist)">dia ${maxDay}</text>`;
+  svg+=`</svg>`;
+  return h(svg);
+}
+
+// ─────────────────────────────────────────────────────────────
+// Exportar / Importar
+// ─────────────────────────────────────────────────────────────
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200);}
+function exportData(){
+  const payload={app:"diario90",exportadoEm:new Date().toISOString(),dados:DATA};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  const hoje=new Date().toISOString().slice(0,10);
+  a.href=url;a.download=`diario-90-dias-backup-${hoje}.json`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast("Backup exportado ✓");
+}
+document.getElementById("importFile").addEventListener("change",function(ev){
+  const file=ev.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const parsed=JSON.parse(e.target.result);
+      const incoming=parsed.dados||parsed;
+      if(typeof incoming!=="object")throw new Error("formato");
+      // mescla: importado sobrescreve os dias presentes, mantém o resto
+      DATA={...DATA,...incoming};
+      persist();render();
+      toast("Backup importado ✓");
+    }catch(err){toast("Arquivo inválido");}
+    ev.target.value="";
+  };
+  reader.readAsText(file);
+});
+
+render();
+</script>
+</body>
+</html>
